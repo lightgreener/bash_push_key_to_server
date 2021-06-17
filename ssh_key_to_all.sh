@@ -39,6 +39,8 @@ do
 	pass=`echo $i |cut -d: -f2`
 	ping -c1 $ip &>/dev/null
 	if [ $? -eq 0 ];then
+		# store available IP
+		echo $ip >>ip_up.txt
 		#/usr/bin/expect <<-END &>/dev/null
 		/usr/bin/expect <<END 
 		spawn ssh-copy-id root@$ip
@@ -53,4 +55,10 @@ END
 	fi
 
 done
+
+#check 
+remote_ip=`head -1 ./ip_up.txt`
+ssh root@$remote_ip hostname
+[ $? -eq 0 ] && echo " all done, success "
+
 
