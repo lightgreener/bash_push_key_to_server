@@ -59,6 +59,11 @@ done
 #check 
 remote_ip=`head -1 ./ip_up.txt`
 ssh root@$remote_ip hostname
-[ $? -eq 0 ] && echo " all done, success "
+
+if [ $? -eq 0 ];then
+	echo " all done, success "
+else
+	echo "error, try again"
+fi
 
 
